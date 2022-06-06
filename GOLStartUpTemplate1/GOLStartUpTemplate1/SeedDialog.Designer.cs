@@ -1,7 +1,7 @@
 ﻿
 namespace GOLStartUpTemplate1
 {
-    partial class Form2
+    partial class SeedDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -33,13 +33,14 @@ namespace GOLStartUpTemplate1
             this.cancelButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.RandomButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // OKButton
             // 
             this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.OKButton.Location = new System.Drawing.Point(70, 67);
+            this.OKButton.Location = new System.Drawing.Point(93, 87);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(75, 23);
             this.OKButton.TabIndex = 0;
@@ -49,7 +50,7 @@ namespace GOLStartUpTemplate1
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(151, 67);
+            this.cancelButton.Location = new System.Drawing.Point(174, 87);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 1;
@@ -59,26 +60,37 @@ namespace GOLStartUpTemplate1
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(38, 26);
+            this.label1.Location = new System.Drawing.Point(64, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 13);
+            this.label1.Size = new System.Drawing.Size(32, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Run To Generation";
+            this.label1.Text = "Seed";
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(151, 24);
+            this.numericUpDown1.Location = new System.Drawing.Point(102, 27);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 3;
             // 
-            // Form2
+            // RandomButton
+            // 
+            this.RandomButton.Location = new System.Drawing.Point(228, 24);
+            this.RandomButton.Name = "RandomButton";
+            this.RandomButton.Size = new System.Drawing.Size(75, 23);
+            this.RandomButton.TabIndex = 4;
+            this.RandomButton.Text = "Randomize";
+            this.RandomButton.UseVisualStyleBackColor = true;
+            this.RandomButton.Click += new System.EventHandler(this.RandomButton_Click);
+            // 
+            // SeedDialog
             // 
             this.AcceptButton = this.OKButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(314, 122);
+            this.ClientSize = new System.Drawing.Size(352, 122);
+            this.Controls.Add(this.RandomButton);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cancelButton);
@@ -86,8 +98,8 @@ namespace GOLStartUpTemplate1
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form2";
-            this.Text = "Run To Generation";
+            this.Name = "SeedDialog";
+            this.Text = "SeedDialog";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -100,5 +112,6 @@ namespace GOLStartUpTemplate1
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button RandomButton;
     }
 }

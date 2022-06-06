@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace GOLStartUpTemplate1
 {
-    public partial class Form2 : Form
+    public partial class SeedDialog : Form
     {
-        public Form2()
+        public SeedDialog()
         {
             InitializeComponent();
         }
 
-        public int IntValue
+        public int RandomSeed
         {
             get
             {
@@ -29,5 +29,11 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        private void RandomButton_Click(object sender, EventArgs e)
+        {
+            Random random = new Random();
+            RandomSeed = random.Next();
+            numericUpDown1.Value = RandomSeed;
+        }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
+
 namespace GOLStartUpTemplate1
 {
     public partial class Form1 : Form
@@ -322,7 +323,19 @@ namespace GOLStartUpTemplate1
 
         private void MenuItemTo_Click(object sender, EventArgs e)
         {
+            Form2 dlg = new Form2();  
 
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                int generation = dlg.IntValue;
+
+                while (generation != 0)
+                {
+                    NextGeneration();
+                    generation--;
+                }
+            }
+            
         }
 
         private void MenuItemFromSeed_Click(object sender, EventArgs e)
