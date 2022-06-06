@@ -256,7 +256,7 @@ namespace GOLStartUpTemplate1
             // 
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
             this.runToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.runToolStripMenuItem.Text = "Start";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.MenuItemStart_Click);
             // 
@@ -265,7 +265,7 @@ namespace GOLStartUpTemplate1
             this.pauseF6ToolStripMenuItem.Enabled = false;
             this.pauseF6ToolStripMenuItem.Name = "pauseF6ToolStripMenuItem";
             this.pauseF6ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-            this.pauseF6ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pauseF6ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.pauseF6ToolStripMenuItem.Text = "Pause";
             this.pauseF6ToolStripMenuItem.Click += new System.EventHandler(this.MenuItemPause_Click);
             // 
@@ -273,14 +273,14 @@ namespace GOLStartUpTemplate1
             // 
             this.nextF7ToolStripMenuItem.Name = "nextF7ToolStripMenuItem";
             this.nextF7ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.nextF7ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nextF7ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.nextF7ToolStripMenuItem.Text = "Next";
             this.nextF7ToolStripMenuItem.Click += new System.EventHandler(this.MenuItemNext_Click);
             // 
             // toToolStripMenuItem
             // 
             this.toToolStripMenuItem.Name = "toToolStripMenuItem";
-            this.toToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.toToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.toToolStripMenuItem.Text = "To";
             this.toToolStripMenuItem.Click += new System.EventHandler(this.MenuItemTo_Click);
             // 
@@ -291,8 +291,8 @@ namespace GOLStartUpTemplate1
             this.fromCurrentSeedToolStripMenuItem,
             this.fromTimeToolStripMenuItem});
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(22, 20);
-            this.toolStripMenuItem2.Text = " ";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(67, 20);
+            this.toolStripMenuItem2.Text = " Random";
             // 
             // FromSeedOption
             // 
@@ -406,30 +406,30 @@ namespace GOLStartUpTemplate1
             // contentsToolStripMenuItem
             // 
             this.contentsToolStripMenuItem.Name = "contentsToolStripMenuItem";
-            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.contentsToolStripMenuItem.Text = "&Contents";
             // 
             // indexToolStripMenuItem
             // 
             this.indexToolStripMenuItem.Name = "indexToolStripMenuItem";
-            this.indexToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.indexToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.indexToolStripMenuItem.Text = "&Index";
             // 
             // searchToolStripMenuItem
             // 
             this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            this.searchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.searchToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.searchToolStripMenuItem.Text = "&Search";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(119, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             // 
             // toolStrip1
