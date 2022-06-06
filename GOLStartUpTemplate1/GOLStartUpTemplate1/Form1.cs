@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace GOLStartUpTemplate1
 {
@@ -301,11 +302,17 @@ namespace GOLStartUpTemplate1
         private void MenuItemStart_Click(object sender, EventArgs e)
         {
             PlayButton_Click(sender, e);
+            runToolStripMenuItem.Enabled = false;
+            nextF7ToolStripMenuItem.Enabled = false;
+            pauseF6ToolStripMenuItem.Enabled = true;
         }
 
         private void MenuItemPause_Click(object sender, EventArgs e)
         {
             PauseButton_Click(sender, e);
+            runToolStripMenuItem.Enabled = true;
+            nextF7ToolStripMenuItem.Enabled = true;
+            pauseF6ToolStripMenuItem.Enabled = false;
         }
 
         private void MenuItemNext_Click(object sender, EventArgs e)
@@ -444,6 +451,36 @@ namespace GOLStartUpTemplate1
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             newToolStripButtonNew_Click(sender, e);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "All Files|*.*|Cells|*.cells";
+            dlg.FilterIndex = 2; dlg.DefaultExt = "cells";
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                using (StreamWriter writer = new StreamWriter(dlg.FileName))
+                {
+                    for (int y = 0; y < universe.GetLength(1); y++)
+                    {
+                        String currentRow = string.Empty;
+                        for (int x = 0; x < universe.GetLength(0); x++)
+                        {
+                            if (universe[x,y] == true)
+                            {
+                                currentRow += "O";
+                            }
+                            else
+                            {
+                                currentRow += ".";
+                            }
+                        }
+                        writer.WriteLine(currentRow);
+                    }
+                }
+            }
         }
     }
 }
