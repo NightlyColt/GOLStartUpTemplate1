@@ -85,7 +85,7 @@ namespace GOLStartUpTemplate1
             this.toolStripStatusLabelGenerations = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelInterval = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelAlive = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.seedLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.colorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -527,7 +527,7 @@ namespace GOLStartUpTemplate1
             this.toolStripStatusLabelGenerations,
             this.toolStripStatusLabelInterval,
             this.toolStripStatusLabelAlive,
-            this.toolStripStatusLabel2});
+            this.seedLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 563);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(644, 22);
@@ -552,11 +552,11 @@ namespace GOLStartUpTemplate1
             this.toolStripStatusLabelAlive.Size = new System.Drawing.Size(45, 17);
             this.toolStripStatusLabelAlive.Text = "Alive: 0";
             // 
-            // toolStripStatusLabel2
+            // seedLabel
             // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(44, 17);
-            this.toolStripStatusLabel2.Text = "Seed: 0";
+            this.seedLabel.Name = "seedLabel";
+            this.seedLabel.Size = new System.Drawing.Size(44, 17);
+            this.seedLabel.Text = "Seed: 0";
             // 
             // contextMenuStrip1
             // 
@@ -671,7 +671,7 @@ namespace GOLStartUpTemplate1
         private System.Windows.Forms.ToolStripMenuItem reloadToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelInterval;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelAlive;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel seedLabel;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem colorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modelToolStripMenuItem;

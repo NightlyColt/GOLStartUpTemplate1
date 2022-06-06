@@ -18,6 +18,8 @@ namespace GOLStartUpTemplate1
         bool[,] universe = new bool[30, 30];
         bool[,] scratchPad = new bool[30, 30];
 
+        int seed = new Random().Next(int.MinValue, int.MaxValue);
+
         // Alive Cells
         int alive = 0;
 
@@ -33,6 +35,7 @@ namespace GOLStartUpTemplate1
 
         public Form1()
         {
+
             InitializeComponent();
 
             // Setup the timer
@@ -40,7 +43,7 @@ namespace GOLStartUpTemplate1
             timer.Tick += Timer_Tick;
             timer.Enabled = false; // start timer running
             toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
-
+            seedLabel.Text = "Seed: " + seed.ToString();
         }
 
         // Calculate the next generation of cells
@@ -257,6 +260,29 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        private void RandomFill()
+        {
+            Random random = new Random(seed);
+            scratchPad = new bool[30, 30];
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    int rand = random.Next(0, 2);
+                    if (rand == 0)
+                    {
+                        scratchPad[x, y] = true;
+                    }
+                    else
+                    {
+                        scratchPad[x, y] = false;
+                    }
+                }
+            }
+            universe = scratchPad;
+            graphicsPanel1.Invalidate();
+        }
+
         private void CountAlive()
         {
             int count = 0;
@@ -340,17 +366,23 @@ namespace GOLStartUpTemplate1
 
         private void MenuItemFromSeed_Click(object sender, EventArgs e)
         {
+            SeedDialog dlg = new SeedDialog();
 
+            dlg.RandomSeed = seed;
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                seed = dlg.RandomSeed;
+                RandomFill();
+            }
         }
 
         private void MenuItemCurrentSeed_Click(object sender, EventArgs e)
         {
-
+            RandomFill();
         }
 
         private void MenuItemFromTime_Click(object sender, EventArgs e)
         {
-
         }
 
         private void MenuItemHUD_Click(object sender, EventArgs e)

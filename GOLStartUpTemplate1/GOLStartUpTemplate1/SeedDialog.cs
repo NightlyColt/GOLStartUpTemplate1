@@ -12,6 +12,7 @@ namespace GOLStartUpTemplate1
 {
     public partial class SeedDialog : Form
     {
+        
         public SeedDialog()
         {
             InitializeComponent();
