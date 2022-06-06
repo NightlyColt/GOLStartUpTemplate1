@@ -204,7 +204,7 @@ namespace GOLStartUpTemplate1
                     }
                     DecideNeighborCount(out int neighbors, x, y);
 
-                    // Draw the neighbors
+                    // Draw the neighbor count on the cell
                     if (neighborCountToolStripMenuItem.Checked)
                     {
                         if (neighbors > 0)
@@ -453,7 +453,71 @@ namespace GOLStartUpTemplate1
             newToolStripButtonNew_Click(sender, e);
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "All Files|*.*|Cells|*.cells";
+            dlg.FilterIndex = 2;
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                using (StreamReader reader = new StreamReader(dlg.FileName))
+                {
+                    int maxWidth = 0;
+                    int maxHeight = 0;
+                    while (!reader.EndOfStream)
+                    {
+                        string row = reader.ReadLine();
+                        if (row[0] == '!')
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            maxHeight++;
+                            if (row.Length > maxWidth)
+                            {
+                                maxWidth = row.Length;
+                            }
+                        }
+                    }
+                    universe = new bool[maxWidth, maxHeight];
+                    scratchPad = new bool[maxWidth, maxHeight];
+
+                    // Reset the file pointer back to the beginning of the file.
+                    reader.BaseStream.Seek(0, SeekOrigin.Begin);
+
+                    int y = 0;
+                    while (!reader.EndOfStream)
+                    {
+                        
+                        string row = reader.ReadLine();
+                        if (row[0] == '!')
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            for (int xPos = 0; xPos < row.Length; xPos++)
+                            {
+                                if (row[xPos] == 'O')
+                                {
+                                    universe[xPos, y] = true;
+                                }
+                                else
+                                {
+                                    universe[xPos, y] = false;
+                                }
+                            }
+                            y++;
+                        }
+                        
+                    }
+                }
+            }
+            graphicsPanel1.Invalidate();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "All Files|*.*|Cells|*.cells";
@@ -468,7 +532,7 @@ namespace GOLStartUpTemplate1
                         String currentRow = string.Empty;
                         for (int x = 0; x < universe.GetLength(0); x++)
                         {
-                            if (universe[x,y] == true)
+                            if (universe[x, y] == true)
                             {
                                 currentRow += "O";
                             }
@@ -481,6 +545,16 @@ namespace GOLStartUpTemplate1
                     }
                 }
             }
+        }
+
+        private void openToolStripButton_Click(object sender, EventArgs e)
+        {
+            openToolStripMenuItem_Click(sender, e);
+        }
+
+        private void saveToolStripButton_Click(object sender, EventArgs e)
+        {
+            saveToolStripMenuItem_Click(sender, e);
         }
     }
 }
