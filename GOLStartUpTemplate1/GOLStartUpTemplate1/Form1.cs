@@ -47,7 +47,8 @@ namespace GOLStartUpTemplate1
             graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
             timer.Interval = Properties.Settings.Default.TimeInterval; // milliseconds
             timer.Tick += Timer_Tick;
-            timer.Enabled = false; // start timer running
+            timer.Enabled = false; // stop timer running
+            // Setup the labels
             toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
             seedLabel.Text = "Seed: " + seed.ToString();
         }
@@ -55,6 +56,7 @@ namespace GOLStartUpTemplate1
         // Calculate the next generation of cells
         private void NextGeneration()
         {
+            // empty canvas
             bool[,] scratchPad = new bool[WIDTH, HEIGHT];
             for (int y = 0; y < universe.GetLength(1); y++)
             {
@@ -70,6 +72,7 @@ namespace GOLStartUpTemplate1
                     // Turn in/of the scratch Pad
                 }
             }
+            // copy the scratchPad into the universe
             universe = scratchPad;
 
             graphicsPanel1.Invalidate();
@@ -85,6 +88,12 @@ namespace GOLStartUpTemplate1
             CountAlive();
         }
 
+        /// <summary>
+        /// Decides if the universe is finite or toroidal
+        /// </summary>
+        /// <param name="neighbors"></param> the count
+        /// <param name="x"></param> the x coordinate
+        /// <param name="y"></param> the y coordinate
         private void DecideNeighborCount(out int neighbors, int x, int y)
         {
             if (finiteToolStripMenuItem.Checked)
@@ -103,6 +112,12 @@ namespace GOLStartUpTemplate1
             NextGeneration();
         }
 
+        /// <summary>
+        /// Counts the a live cells in a finite space (limited)
+        /// </summary>
+        /// <param name="x"></param> The x coordinate
+        /// <param name="y"></param> the y coordinate
+        /// <returns> the amount of neighbors surrounded by the cell that are alive</returns>
         private int CountNeighborsFinite(int x, int y)
         {
             int count = 0;
@@ -135,6 +150,12 @@ namespace GOLStartUpTemplate1
             return count;
         }
 
+        /// <summary>
+        /// Counts the a live cells in a toroidal space (warped)
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns> the amount of neighbors surrounded by the cell that are alive</returns>
         private int CountNeighborsToroidal(int x, int y)
         {
             int count = 0;
@@ -167,6 +188,7 @@ namespace GOLStartUpTemplate1
             return count;
         }
 
+        // Paints the panel
         private void graphicsPanel1_Paint(object sender, PaintEventArgs e)
         {
             // Calculate the width and height of each cell in pixels
@@ -259,6 +281,7 @@ namespace GOLStartUpTemplate1
             cellBrush.Dispose();
         }
 
+        // interacts with cells that are either alive or dead
         private void graphicsPanel1_MouseClick(object sender, MouseEventArgs e)
         {
             // If the left mouse button was clicked
@@ -283,6 +306,9 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        /// <summary>
+        /// Randomly fills the universe based on a seed
+        /// </summary>
         private void RandomFill()
         {
             Random random = new Random(seed);
@@ -306,6 +332,9 @@ namespace GOLStartUpTemplate1
             graphicsPanel1.Invalidate();
         }
 
+        /// <summary>
+        /// Count how many cells are alive in the panel
+        /// </summary>
         private void CountAlive()
         {
             int count = 0;
@@ -323,11 +352,8 @@ namespace GOLStartUpTemplate1
             alive = count;
             toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
         }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
+        
+        // runs the game
         private void PlayButton_Click(object sender, EventArgs e)
         {
             timer.Start(); // start timer running
@@ -336,6 +362,7 @@ namespace GOLStartUpTemplate1
             PauseButton.Enabled = true;
         }
 
+        // pauses the game
         private void PauseButton_Click(object sender, EventArgs e)
         {
             timer.Stop(); // stop timer 
@@ -344,11 +371,13 @@ namespace GOLStartUpTemplate1
             PauseButton.Enabled = false;
         }
 
+        // goes through the next iteration from the current generation
         private void NextButton_Click(object sender, EventArgs e)
         {
             NextGeneration();
         }
 
+        // menu item to start the game
         private void MenuItemStart_Click(object sender, EventArgs e)
         {
             PlayButton_Click(sender, e);
@@ -357,6 +386,7 @@ namespace GOLStartUpTemplate1
             pauseF6ToolStripMenuItem.Enabled = true;
         }
 
+        // menu item to pause the game
         private void MenuItemPause_Click(object sender, EventArgs e)
         {
             PauseButton_Click(sender, e);
@@ -365,11 +395,13 @@ namespace GOLStartUpTemplate1
             pauseF6ToolStripMenuItem.Enabled = false;
         }
 
+        // menu item to the next iteration of the universe from the current generation
         private void MenuItemNext_Click(object sender, EventArgs e)
         {
             NextButton_Click(sender, e);
         }
 
+        // iterates the generations by a given set number of times
         private void MenuItemTo_Click(object sender, EventArgs e)
         {
             Form2 dlg = new Form2();  
@@ -387,6 +419,7 @@ namespace GOLStartUpTemplate1
             
         }
 
+        // A modal dialog to randomly make a seed and then randomly generate a universe
         private void MenuItemFromSeed_Click(object sender, EventArgs e)
         {
             SeedDialog dlg = new SeedDialog();
@@ -399,15 +432,19 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        // randomly generate a universe from the current seed
         private void MenuItemCurrentSeed_Click(object sender, EventArgs e)
         {
             RandomFill();
         }
 
+        // randomly generate a universe based on time
         private void MenuItemFromTime_Click(object sender, EventArgs e)
         {
+           
         }
 
+        // enables or disables the HUD
         private void MenuItemHUD_Click(object sender, EventArgs e)
         {
             if (MenuItemHUD.Checked == true)
@@ -420,6 +457,7 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        // enables or disables the neighbor count print
         private void MenuItemNeighborCount_Click(object sender, EventArgs e)
         {
             if (neighborCountToolStripMenuItem.Checked == true)
@@ -434,6 +472,7 @@ namespace GOLStartUpTemplate1
 
         }
 
+        // enables or disables the grid from the panel
         private void MenuItemGrid_Click(object sender, EventArgs e)
         {
             if (MenuItemGrid.Checked == true)
@@ -448,12 +487,14 @@ namespace GOLStartUpTemplate1
             graphicsPanel1.Invalidate();
         }
 
+        // makes the universe toroidal (warped)
         private void MenuItemToroidal_Click(object sender, EventArgs e)
         {
             finiteToolStripMenuItem.Checked = false;
             toroidalToolStripMenuItem.Checked = true;
         }
 
+        // makes the universe finite (limited)
         private void MenuItemFinite_Click(object sender, EventArgs e)
         {
             toroidalToolStripMenuItem.Checked = false;
@@ -461,6 +502,7 @@ namespace GOLStartUpTemplate1
 
         }
 
+        // opens a color modal dialog to change the back color of the panel
         private void MenuItemBackColor_Click(object sender, EventArgs e)
         {
             ColorDialog dlg = new ColorDialog();
@@ -472,6 +514,7 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        // opens a color modal dialog to change the cell color
         private void MenuItemCellColor_Click(object sender, EventArgs e)
         {
             ColorDialog dlg = new ColorDialog();
@@ -484,6 +527,7 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        // opens a color modal dialog to change the grid color
         private void MenuItemGridColor_Click(object sender, EventArgs e)
         {
             ColorDialog dlg = new ColorDialog();
@@ -496,6 +540,7 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        // opens a color modal dialog to change grid x 10 color
         private void MenuItemGridx10Color_Click(object sender, EventArgs e)
         {
             ColorDialog dlg = new ColorDialog();
@@ -508,6 +553,7 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        // opens an option modal dialog to change the size and timer interval of the universe
         private void MenuItemOptions_Click(object sender, EventArgs e)
         {
             OptionDialog dlg = new OptionDialog();
@@ -527,6 +573,7 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        // resets the settings to the default value
         private void MenuItemReset_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Reset();
@@ -543,6 +590,7 @@ namespace GOLStartUpTemplate1
             graphicsPanel1.Invalidate();
         }
 
+        // reloads the previous settings values
         private void MenuItemReload_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Reload();
@@ -559,11 +607,13 @@ namespace GOLStartUpTemplate1
             graphicsPanel1.Invalidate();
         }
 
+        // creates a way to close the program
         private void MenuItemExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        // empties or clears the universe
         private void newToolStripButtonNew_Click(object sender, EventArgs e)
         {
             universe = new bool[WIDTH, HEIGHT];
@@ -572,11 +622,13 @@ namespace GOLStartUpTemplate1
             graphicsPanel1.Invalidate();
         }
 
+        // menu item way to empty the universe
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             newToolStripButtonNew_Click(sender, e);
         }
 
+        // opens a modal dialog box to open a file of cells
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
@@ -644,6 +696,7 @@ namespace GOLStartUpTemplate1
             graphicsPanel1.Invalidate();
         }
 
+        // opens a modal dialog box to save the current file into a new file
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog();
@@ -674,16 +727,19 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        // menu item to open a file
         private void openToolStripButton_Click(object sender, EventArgs e)
         {
             openToolStripMenuItem_Click(sender, e);
         }
 
+        // menu item to save a file
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
             saveToolStripMenuItem_Click(sender, e);
         }
 
+        // saves the current settings when the application is closed
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Properties.Settings.Default.UniverseWidth = WIDTH;
