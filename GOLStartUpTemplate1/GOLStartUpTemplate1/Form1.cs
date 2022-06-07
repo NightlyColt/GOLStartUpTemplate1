@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Globalization;
 
 
 namespace GOLStartUpTemplate1
@@ -187,6 +188,7 @@ namespace GOLStartUpTemplate1
                 }
             }
 
+            
             return count;
         }
 
@@ -225,7 +227,7 @@ namespace GOLStartUpTemplate1
                     cellRect.X = x * cellWidth;
                     cellRect.Y = y * cellHeight;
                     cellRect.Width = cellWidth;
-                    cellRect.Height = 69;
+                    cellRect.Height = cellHeight;
 
                     // Fill the cell with a brush if alive
                     if (universe[x, y] == true)
@@ -451,7 +453,11 @@ namespace GOLStartUpTemplate1
         // randomly generate a universe based on time
         private void MenuItemFromTime_Click(object sender, EventArgs e)
         {
-           
+            DateTime time = DateTime.Now;
+
+            int currentTime = time.Hour + time.Minute + time.Second + time.Millisecond;
+            seed = currentTime;
+            RandomFill();
         }
 
         // enables or disables the HUD
