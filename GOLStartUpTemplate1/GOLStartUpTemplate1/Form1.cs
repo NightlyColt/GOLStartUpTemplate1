@@ -227,6 +227,7 @@ namespace GOLStartUpTemplate1
                     cellRect.Width = cellWidth;
                     cellRect.Height = cellHeight;
 
+                    int x 
                     // Fill the cell with a brush if alive
                     if (universe[x, y] == true)
                     {
