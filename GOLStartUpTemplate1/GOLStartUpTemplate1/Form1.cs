@@ -20,7 +20,7 @@ namespace GOLStartUpTemplate1
 
         // The universe array
         bool[,] universe = new bool[WIDTH, HEIGHT];
-        bool[,] scratchPad = new bool[WIDTH, HEIGHT];
+        bool[,] scratchPad;
 
         // seed of universe
         int seed = new Random().Next(int.MinValue, int.MaxValue);
@@ -56,8 +56,9 @@ namespace GOLStartUpTemplate1
         // Calculate the next generation of cells
         private void NextGeneration()
         {
-            // empty canvas
+            // makes an empty canvas
             bool[,] scratchPad = new bool[WIDTH, HEIGHT];
+
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(1); x++)
@@ -207,6 +208,7 @@ namespace GOLStartUpTemplate1
             // The Font for the count of neighbors
             Font font = new Font("Arial", 10f);
               
+            // Setup the format for the font
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
@@ -242,15 +244,18 @@ namespace GOLStartUpTemplate1
                     {
                         if (neighbors > 0)
                         {
+                            // writes the number green if the cell has three neighbors and its dead
                             if (universe[x, y] == false && neighbors == 3)
                             {
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
                             }
+                            // writes the number green if the cell is alive and has 2 or 3 neighbors
                             else if (universe[x, y] == true && (neighbors == 2 || neighbors == 3))
                             {
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
 
                             }
+                            // default writes the numbers red
                             else
                             {
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Red, cellRect, stringFormat);
@@ -258,7 +263,7 @@ namespace GOLStartUpTemplate1
                         }
                     }
 
-                    // Draw the thick lines
+                    // Draw the gridx10 line
                     if (x % 10 == 0 && x != 0)
                     {
                         Point point1 = new Point((int)(x * cellWidth), 0);
@@ -278,6 +283,7 @@ namespace GOLStartUpTemplate1
 
             // Cleaning up pens and brushes
             gridPen.Dispose();
+            gridx10Pen.Dispose();
             cellBrush.Dispose();
         }
 
@@ -752,6 +758,26 @@ namespace GOLStartUpTemplate1
             Properties.Settings.Default.BackGroundColor = graphicsPanel1.BackColor;
 
             Properties.Settings.Default.Save();
+        }
+
+        private void backColorToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MenuItemBackColor_Click(sender, e);
+        }
+
+        private void cellColorToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MenuItemCellColor_Click(sender, e);
+        }
+
+        private void gridColorToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MenuItemGridColor_Click(sender, e);
+        }
+
+        private void gridx10ColorToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MenuItemGridx10Color_Click(sender, e);
         }
     }
 }
