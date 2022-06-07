@@ -14,10 +14,15 @@ namespace GOLStartUpTemplate1
 {
     public partial class Form1 : Form
     {
-        // The universe array
-        bool[,] universe = new bool[30, 30];
-        bool[,] scratchPad = new bool[30, 30];
+        // size of the universe
+        static int WIDTH = 30;
+        static int HEIGHT = 30;
 
+        // The universe array
+        bool[,] universe = new bool[WIDTH, HEIGHT];
+        bool[,] scratchPad = new bool[WIDTH, HEIGHT];
+
+        // seed of universe
         int seed = new Random().Next(int.MinValue, int.MaxValue);
 
         // Alive Cells
@@ -49,7 +54,7 @@ namespace GOLStartUpTemplate1
         // Calculate the next generation of cells
         private void NextGeneration()
         {
-            bool[,] scratchPad = new bool[30, 30];
+            bool[,] scratchPad = new bool[WIDTH, HEIGHT];
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(1); x++)
@@ -263,7 +268,7 @@ namespace GOLStartUpTemplate1
         private void RandomFill()
         {
             Random random = new Random(seed);
-            scratchPad = new bool[30, 30];
+            scratchPad = new bool[WIDTH, HEIGHT];
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
@@ -440,17 +445,35 @@ namespace GOLStartUpTemplate1
 
         private void MenuItemBackColor_Click(object sender, EventArgs e)
         {
+            ColorDialog dlg = new ColorDialog();
+            dlg.Color = graphicsPanel1.BackColor;
 
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                graphicsPanel1.BackColor = dlg.Color;
+            }
         }
 
         private void MenuItemCellColor_Click(object sender, EventArgs e)
         {
+            ColorDialog dlg = new ColorDialog();
+            dlg.Color = cellColor;
 
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                cellColor = dlg.Color;
+            }
         }
 
         private void MenuItemGridColor_Click(object sender, EventArgs e)
         {
+            ColorDialog dlg = new ColorDialog();
+            dlg.Color = gridColor;
 
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                gridColor = dlg.Color;
+            }
         }
 
         private void MenuItemGridx10Color_Click(object sender, EventArgs e)
@@ -480,7 +503,7 @@ namespace GOLStartUpTemplate1
 
         private void newToolStripButtonNew_Click(object sender, EventArgs e)
         {
-            universe = new bool[30, 30];
+            universe = new bool[WIDTH, HEIGHT];
             generations = 0;
             toolStripStatusLabelGenerations.Text = "Generations: " + generations.ToString();
             graphicsPanel1.Invalidate();
@@ -518,8 +541,11 @@ namespace GOLStartUpTemplate1
                             }
                         }
                     }
-                    universe = new bool[maxWidth, maxHeight];
-                    scratchPad = new bool[maxWidth, maxHeight];
+                    WIDTH = maxWidth;
+                    HEIGHT = maxHeight;
+
+                    universe = new bool[WIDTH, HEIGHT];
+                    scratchPad = new bool[WIDTH, HEIGHT];
 
                     // Reset the file pointer back to the beginning of the file.
                     reader.BaseStream.Seek(0, SeekOrigin.Begin);
