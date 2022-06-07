@@ -263,20 +263,23 @@ namespace GOLStartUpTemplate1
                         }
                     }
 
-                    // Draw the gridx10 line
-                    if (x % 10 == 0 && x != 0)
+                    if (MenuItemGrid.Checked)
                     {
-                        Point point1 = new Point((int)(x * cellWidth), 0);
-                        Point point2 = new Point((int)(x * cellWidth), (int)((universe.GetLength(1) + 1) * cellHeight));
+                        // Draw the gridx10 line
+                        if (x % 10 == 0 && x != 0)
+                        {
+                            Point point1 = new Point((int)(x * cellWidth), 0);
+                            Point point2 = new Point((int)(x * cellWidth), (int)((universe.GetLength(1) + 1) * cellHeight));
 
-                        e.Graphics.DrawLine(gridx10Pen, point1, point2);
-                    }
-                    if (y % 10 == 0 && y != 0)
-                    {
-                        Point point1 = new Point(0 , (int)(y * cellHeight));
-                        Point point2 = new Point((int)((universe.GetLength(0) + 1) * cellWidth) , (int)(y * cellHeight));
+                            e.Graphics.DrawLine(gridx10Pen, point1, point2);
+                        }
+                        if (y % 10 == 0 && y != 0)
+                        {
+                            Point point1 = new Point(0, (int)(y * cellHeight));
+                            Point point2 = new Point((int)((universe.GetLength(0) + 1) * cellWidth), (int)(y * cellHeight));
 
-                        e.Graphics.DrawLine(gridx10Pen, point1, point2);
+                            e.Graphics.DrawLine(gridx10Pen, point1, point2);
+                        }
                     }
                 }
             }
@@ -453,27 +456,14 @@ namespace GOLStartUpTemplate1
         // enables or disables the HUD
         private void MenuItemHUD_Click(object sender, EventArgs e)
         {
-            if (MenuItemHUD.Checked == true)
-            {
-                MenuItemHUD.Checked = false;
-            }
-            else
-            {
-                MenuItemHUD.Checked = true;
-            }
+            Toggle(MenuItemHUD);
+            graphicsPanel1.Invalidate();
         }
 
         // enables or disables the neighbor count print
         private void MenuItemNeighborCount_Click(object sender, EventArgs e)
         {
-            if (neighborCountToolStripMenuItem.Checked == true)
-            {
-                neighborCountToolStripMenuItem.Checked = false;
-            }
-            else
-            {
-                neighborCountToolStripMenuItem.Checked = true;
-            }
+            Toggle(neighborCountToolStripMenuItem);
             graphicsPanel1.Invalidate();
 
         }
@@ -481,15 +471,7 @@ namespace GOLStartUpTemplate1
         // enables or disables the grid from the panel
         private void MenuItemGrid_Click(object sender, EventArgs e)
         {
-            if (MenuItemGrid.Checked == true)
-            {
-                MenuItemGrid.Checked = false;
-
-            }
-            else
-            {
-                MenuItemGrid.Checked = true;
-            }
+            Toggle(MenuItemGrid);
             graphicsPanel1.Invalidate();
         }
 
@@ -498,6 +480,8 @@ namespace GOLStartUpTemplate1
         {
             finiteToolStripMenuItem.Checked = false;
             toroidalToolStripMenuItem.Checked = true;
+            graphicsPanel1.Invalidate();
+
         }
 
         // makes the universe finite (limited)
@@ -505,6 +489,8 @@ namespace GOLStartUpTemplate1
         {
             toroidalToolStripMenuItem.Checked = false;
             finiteToolStripMenuItem.Checked = true;
+            graphicsPanel1.Invalidate();
+
 
         }
 
@@ -760,6 +746,8 @@ namespace GOLStartUpTemplate1
             Properties.Settings.Default.Save();
         }
 
+        // Context menu
+        // changing colors
         private void backColorToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             MenuItemBackColor_Click(sender, e);
@@ -778,6 +766,40 @@ namespace GOLStartUpTemplate1
         private void gridx10ColorToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             MenuItemGridx10Color_Click(sender, e);
+        }
+
+        // changing view accessability
+        private void hUDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Toggle(hUDToolStripMenuItem);
+
+            MenuItemHUD_Click(sender, e);
+        }
+
+        private void neighborCountToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Toggle(neighborCountToolStripMenuItem1);
+
+            MenuItemNeighborCount_Click(sender, e);
+        }
+
+        private void gridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Toggle(gridToolStripMenuItem);
+            MenuItemGrid_Click(sender, e);
+        }
+
+        private void Toggle(ToolStripMenuItem menuItem)
+        {
+            if (menuItem.Checked == true)
+            {
+                menuItem.Checked = false;
+
+            }
+            else
+            {
+                menuItem.Checked = true;
+            }
         }
     }
 }
