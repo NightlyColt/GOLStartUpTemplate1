@@ -15,8 +15,8 @@ namespace GOLStartUpTemplate1
     public partial class Form1 : Form
     {
         // size of the universe
-        static int WIDTH = 30;
-        static int HEIGHT = 30;
+        static int WIDTH = Properties.Settings.Default.UniverseWidth;
+        static int HEIGHT = Properties.Settings.Default.UniverseHeight;
 
         // The universe array
         bool[,] universe = new bool[WIDTH, HEIGHT];
@@ -29,9 +29,9 @@ namespace GOLStartUpTemplate1
         int alive = 0;
 
         // Drawing colors
-        Color gridColor = Color.Black;
-        Color gridx10Color = Color.Black;
-        Color cellColor = Color.LightGray;
+        Color gridColor = Properties.Settings.Default.GridColor;
+        Color gridx10Color = Properties.Settings.Default.Gridx10Color;
+        Color cellColor = Properties.Settings.Default.CellColor;
 
         // The Timer class
         Timer timer = new Timer();
@@ -41,11 +41,11 @@ namespace GOLStartUpTemplate1
 
         public Form1()
         {
-
             InitializeComponent();
 
             // Setup the timer
-            timer.Interval = 100; // milliseconds
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
+            timer.Interval = Properties.Settings.Default.TimeInterval; // milliseconds
             timer.Tick += Timer_Tick;
             timer.Enabled = false; // start timer running
             toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
@@ -480,6 +480,7 @@ namespace GOLStartUpTemplate1
             if (DialogResult.OK == dlg.ShowDialog())
             {
                 cellColor = dlg.Color;
+                graphicsPanel1.Invalidate();
             }
         }
 
@@ -491,27 +492,71 @@ namespace GOLStartUpTemplate1
             if (DialogResult.OK == dlg.ShowDialog())
             {
                 gridColor = dlg.Color;
+                graphicsPanel1.Invalidate();
             }
         }
 
         private void MenuItemGridx10Color_Click(object sender, EventArgs e)
         {
+            ColorDialog dlg = new ColorDialog();
+            dlg.Color = gridx10Color;
 
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                gridx10Color = dlg.Color;
+                graphicsPanel1.Invalidate();
+            }
         }
 
         private void MenuItemOptions_Click(object sender, EventArgs e)
         {
+            OptionDialog dlg = new OptionDialog();
 
+            dlg.Interval = timer.Interval;
+            dlg.UWidth = WIDTH;
+            dlg.UHeight = HEIGHT;
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                timer.Interval = dlg.Interval;
+                WIDTH = dlg.UWidth;
+                HEIGHT = dlg.UHeight;
+                universe = new bool[WIDTH, HEIGHT];
+                toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
+
+                graphicsPanel1.Invalidate();
+            }
         }
 
         private void MenuItemReset_Click(object sender, EventArgs e)
         {
+            Properties.Settings.Default.Reset();
+            WIDTH = Properties.Settings.Default.UniverseWidth;
+            HEIGHT = Properties.Settings.Default.UniverseHeight;
+            timer.Interval = Properties.Settings.Default.TimeInterval;
 
+            gridColor = Properties.Settings.Default.GridColor;
+            gridx10Color = Properties.Settings.Default.Gridx10Color;
+            cellColor = Properties.Settings.Default.CellColor;
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
+
+            universe = new bool[WIDTH, HEIGHT];
+            graphicsPanel1.Invalidate();
         }
 
         private void MenuItemReload_Click(object sender, EventArgs e)
         {
+            Properties.Settings.Default.Reload();
+            WIDTH = Properties.Settings.Default.UniverseWidth;
+            HEIGHT = Properties.Settings.Default.UniverseHeight;
+            timer.Interval = Properties.Settings.Default.TimeInterval;
 
+            gridColor = Properties.Settings.Default.GridColor;
+            gridx10Color = Properties.Settings.Default.Gridx10Color;
+            cellColor = Properties.Settings.Default.CellColor;
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
+
+            universe = new bool[WIDTH, HEIGHT];
+            graphicsPanel1.Invalidate();
         }
 
         private void MenuItemExit_Click(object sender, EventArgs e)
@@ -637,6 +682,20 @@ namespace GOLStartUpTemplate1
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
             saveToolStripMenuItem_Click(sender, e);
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Properties.Settings.Default.UniverseWidth = WIDTH;
+            Properties.Settings.Default.UniverseHeight = HEIGHT;
+            Properties.Settings.Default.TimeInterval = timer.Interval;
+
+            Properties.Settings.Default.GridColor = gridColor;
+            Properties.Settings.Default.Gridx10Color = gridx10Color;
+            Properties.Settings.Default.CellColor = cellColor;
+            Properties.Settings.Default.BackGroundColor = graphicsPanel1.BackColor;
+
+            Properties.Settings.Default.Save();
         }
     }
 }
