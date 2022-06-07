@@ -58,9 +58,11 @@ namespace GOLStartUpTemplate1
         {
             // makes an empty canvas
             bool[,] scratchPad = new bool[WIDTH, HEIGHT];
-
+            
+            // iterate through the y position in the universe
             for (int y = 0; y < universe.GetLength(1); y++)
             {
+                // iterate through the x position in the universe
                 for (int x = 0; x < universe.GetLength(1); x++)
                 {
                     DecideNeighborCount(out int count, x, y);
@@ -79,9 +81,8 @@ namespace GOLStartUpTemplate1
             graphicsPanel1.Invalidate();
             // Increment generation count
             generations++;
-            alive = 0;
 
-            // Update status strip generations
+            // Update status strip generations and interval
             toolStripStatusLabelGenerations.Text = "Generations: " + generations.ToString();
             toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
 
