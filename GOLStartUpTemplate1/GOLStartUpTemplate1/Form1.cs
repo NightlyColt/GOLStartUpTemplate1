@@ -30,6 +30,7 @@ namespace GOLStartUpTemplate1
 
         // Drawing colors
         Color gridColor = Color.Black;
+        Color gridx10Color = Color.Black;
         Color cellColor = Color.LightGray;
 
         // The Timer class
@@ -176,6 +177,7 @@ namespace GOLStartUpTemplate1
 
             // A Pen for drawing the grid lines (color, width)
             Pen gridPen = new Pen(gridColor, 1);
+            Pen gridx10Pen = new Pen(gridx10Color, 3);
 
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
@@ -232,6 +234,22 @@ namespace GOLStartUpTemplate1
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Red, cellRect, stringFormat);
                             }
                         }
+                    }
+
+                    // Draw the thick lines
+                    if (x % 10 == 0 && x != 0)
+                    {
+                        Point point1 = new Point((int)(x * cellWidth), 0);
+                        Point point2 = new Point((int)(x * cellWidth), (int)((universe.GetLength(1) + 1) * cellHeight));
+
+                        e.Graphics.DrawLine(gridx10Pen, point1, point2);
+                    }
+                    if (y % 10 == 0 && y != 0)
+                    {
+                        Point point1 = new Point(0 , (int)(y * cellHeight));
+                        Point point2 = new Point((int)((universe.GetLength(0) + 1) * cellWidth) , (int)(y * cellHeight));
+
+                        e.Graphics.DrawLine(gridx10Pen, point1, point2);
                     }
                 }
             }
