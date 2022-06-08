@@ -59,7 +59,7 @@ namespace GOLStartUpTemplate1
         {
             // makes an empty canvas
             bool[,] scratchPad = new bool[WIDTH, HEIGHT];
-            
+
             // iterate through the y position in the universe
             for (int y = 0; y < universe.GetLength(1); y++)
             {
@@ -188,7 +188,7 @@ namespace GOLStartUpTemplate1
                 }
             }
 
-            
+
             return count;
         }
 
@@ -207,12 +207,12 @@ namespace GOLStartUpTemplate1
 
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
-            Brush hudBrush = new SolidBrush(Color.Magenta);
+            Brush hudBrush = new SolidBrush(Color.Black);
 
             // The Font for the count of neighbors
             Font font = new Font("Arial", 10f);
             Font hudFont = new Font("Palatino Linotype", 13f);
-              
+
             // Setup the format for the neighbors
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
@@ -249,10 +249,11 @@ namespace GOLStartUpTemplate1
                     {
                         if (neighbors > 0)
                         {
-                            // writes the number green if the cell has three neighbors and its dead
+                            // writes the number green if the cell has three neighbors and its dead while also filling the square
                             if (universe[x, y] == false && neighbors == 3)
                             {
-                                e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
+                                e.Graphics.FillRectangle(Brushes.Green, cellRect);
+                                e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Black, cellRect, stringFormat);
                             }
                             // writes the number green if the cell is alive and has 2 or 3 neighbors
                             else if (universe[x, y] == true && (neighbors == 2 || neighbors == 3))
@@ -260,10 +261,20 @@ namespace GOLStartUpTemplate1
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
 
                             }
-                            // default writes the numbers red
+                            // if an alive cell would die, change the color of the cell
+                            else if (universe[x, y] == true)
+                            {
+                                e.Graphics.FillRectangle(Brushes.IndianRed, cellRect);
+                                e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Black, cellRect, stringFormat);
+                            }
+
+                            // if a dead cell can not be revived, staty red
                             else
                             {
-                                e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Red, cellRect, stringFormat);
+                                DecideColor(out Brush deadCellBrush);
+                                e.Graphics.DrawString(neighbors.ToString(), font, deadCellBrush, cellRect, stringFormat);
+                                // dispose of the used brush
+                                deadCellBrush.Dispose();
                             }
                         }
                     }
@@ -339,53 +350,6 @@ namespace GOLStartUpTemplate1
             }
         }
 
-        /// <summary>
-        /// Randomly fills the universe based on a seed
-        /// </summary>
-        private void RandomFill()
-        {
-            Random random = new Random(seed);
-            scratchPad = new bool[WIDTH, HEIGHT];
-            for (int y = 0; y < universe.GetLength(1); y++)
-            {
-                for (int x = 0; x < universe.GetLength(0); x++)
-                {
-                    int rand = random.Next(0, 2);
-                    if (rand == 0)
-                    {
-                        scratchPad[x, y] = true;
-                    }
-                    else
-                    {
-                        scratchPad[x, y] = false;
-                    }
-                }
-            }
-            universe = scratchPad;
-            graphicsPanel1.Invalidate();
-        }
-
-        /// <summary>
-        /// Count how many cells are alive in the panel
-        /// </summary>
-        private void CountAlive()
-        {
-            int count = 0;
-            for (int yNum = 0; yNum < universe.GetLength(1); yNum++)
-            {
-                for (int xNum = 0; xNum < universe.GetLength(0); xNum++)
-                {
-                    if (universe[xNum, yNum] == true)
-                    {
-                        count++;
-
-                    }
-                }
-            }
-            alive = count;
-            toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
-        }
-        
         // runs the game
         private void PlayButton_Click(object sender, EventArgs e)
         {
@@ -437,7 +401,7 @@ namespace GOLStartUpTemplate1
         // iterates the generations by a given set number of times
         private void MenuItemTo_Click(object sender, EventArgs e)
         {
-            Form2 dlg = new Form2();  
+            Form2 dlg = new Form2();
 
             if (DialogResult.OK == dlg.ShowDialog())
             {
@@ -449,7 +413,7 @@ namespace GOLStartUpTemplate1
                     generation--;
                 }
             }
-            
+
         }
 
         // A modal dialog to randomly make a seed and then randomly generate a universe
@@ -690,7 +654,7 @@ namespace GOLStartUpTemplate1
                     int y = 0;
                     while (!reader.EndOfStream)
                     {
-                        
+
                         string row = reader.ReadLine();
                         if (row[0] == '!')
                         {
@@ -711,7 +675,7 @@ namespace GOLStartUpTemplate1
                             }
                             y++;
                         }
-                        
+
                     }
                 }
             }
@@ -819,6 +783,56 @@ namespace GOLStartUpTemplate1
             MenuItemGrid_Click(sender, e);
         }
 
+        //|--------------------------------------- Helper Methods -------------------------------------------------|
+
+        /// <summary>
+        /// Count how many cells are alive in the panel
+        /// </summary>
+        private void CountAlive()
+        {
+            int count = 0;
+            for (int yNum = 0; yNum < universe.GetLength(1); yNum++)
+            {
+                for (int xNum = 0; xNum < universe.GetLength(0); xNum++)
+                {
+                    if (universe[xNum, yNum] == true)
+                    {
+                        count++;
+
+                    }
+                }
+            }
+            alive = count;
+            toolStripStatusLabelAlive.Text = "Alive: " + alive.ToString();
+        }
+
+        /// <summary>
+        /// Randomly fills the universe based on a seed
+        /// </summary>
+        private void RandomFill()
+        {
+            Random random = new Random(seed);
+            scratchPad = new bool[WIDTH, HEIGHT];
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    int rand = random.Next(0, 2);
+                    if (rand == 0)
+                    {
+                        scratchPad[x, y] = true;
+                    }
+                    else
+                    {
+                        scratchPad[x, y] = false;
+                    }
+                }
+            }
+            universe = scratchPad;
+            graphicsPanel1.Invalidate();
+        }
+
+        // toggles a menu item object
         private void Toggle(ToolStripMenuItem menuItem)
         {
             if (menuItem.Checked == true)
@@ -832,6 +846,21 @@ namespace GOLStartUpTemplate1
             }
         }
 
-        
+        // Decides the color for the dead cell based on the back color of the panel
+        private void DecideColor(out Brush brush)
+        {
+            Color deadColor;
+
+            if (graphicsPanel1.BackColor != Color.Red)
+            {
+                deadColor = Color.Red;
+            }
+            else
+            {
+                deadColor = Color.White;
+            }
+
+            brush = new SolidBrush(deadColor);
+        }
     }
 }
