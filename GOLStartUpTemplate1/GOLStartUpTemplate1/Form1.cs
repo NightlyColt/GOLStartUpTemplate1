@@ -207,11 +207,13 @@ namespace GOLStartUpTemplate1
 
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
+            Brush hudBrush = new SolidBrush(Color.Magenta);
 
             // The Font for the count of neighbors
             Font font = new Font("Arial", 10f);
+            Font hudFont = new Font("Palatino Linotype", 13f);
               
-            // Setup the format for the font
+            // Setup the format for the neighbors
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
             stringFormat.LineAlignment = StringAlignment.Center;
@@ -266,9 +268,9 @@ namespace GOLStartUpTemplate1
                         }
                     }
 
+                    // Draw the gridx10 line
                     if (MenuItemGrid.Checked)
                     {
-                        // Draw the gridx10 line
                         if (x % 10 == 0 && x != 0)
                         {
                             Point point1 = new Point((int)(x * cellWidth), 0);
@@ -287,10 +289,29 @@ namespace GOLStartUpTemplate1
                 }
             }
 
+            // Draw the the HUD
+            if (MenuItemHUD.Checked)
+            {
+                Point point = new Point(0, (int)((universe.GetLength(1) - 5) * cellHeight));
+                e.Graphics.DrawString($"Generations: {generations}", hudFont, hudBrush, point);
+
+                point.Y = (int)((universe.GetLength(1) - 4) * cellHeight);
+                e.Graphics.DrawString($"Cell Count: {alive}", hudFont, hudBrush, point);
+
+                point.Y = (int)((universe.GetLength(1) - 3) * cellHeight);
+                string boundryType = (finiteToolStripMenuItem.Checked) ? "Finite" : "Toroidal";
+                e.Graphics.DrawString($"Boundry Type: {boundryType}", hudFont, hudBrush, point);
+
+                point.Y = (int)((universe.GetLength(1) - 2) * cellHeight);
+                e.Graphics.DrawString($"Universe Size: {"{Width=" + WIDTH + ", Height=" + HEIGHT + "}"} ", hudFont, hudBrush, point);
+
+            }
+
             // Cleaning up pens and brushes
             gridPen.Dispose();
             gridx10Pen.Dispose();
             cellBrush.Dispose();
+            hudBrush.Dispose();
         }
 
         // interacts with cells that are either alive or dead
@@ -586,6 +607,7 @@ namespace GOLStartUpTemplate1
             graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
 
             universe = new bool[WIDTH, HEIGHT];
+            CountAlive(); // update the alive member variable
             graphicsPanel1.Invalidate();
         }
 
@@ -603,6 +625,7 @@ namespace GOLStartUpTemplate1
             graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
 
             universe = new bool[WIDTH, HEIGHT];
+            CountAlive(); // update the alive member variable
             graphicsPanel1.Invalidate();
         }
 
@@ -808,5 +831,7 @@ namespace GOLStartUpTemplate1
                 menuItem.Checked = true;
             }
         }
+
+        
     }
 }
