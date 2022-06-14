@@ -97,6 +97,7 @@ namespace GOLStartUpTemplate1
             this.neighborCountToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphicsPanel1 = new GOLStartUpTemplate1.GraphicsPanel();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -139,7 +140,7 @@ namespace GOLStartUpTemplate1
             this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -202,7 +203,7 @@ namespace GOLStartUpTemplate1
             // MenuItemHUD
             // 
             this.MenuItemHUD.Name = "MenuItemHUD";
-            this.MenuItemHUD.Size = new System.Drawing.Size(180, 22);
+            this.MenuItemHUD.Size = new System.Drawing.Size(160, 22);
             this.MenuItemHUD.Text = "HUD";
             this.MenuItemHUD.Click += new System.EventHandler(this.MenuItemHUD_Click);
             // 
@@ -211,7 +212,7 @@ namespace GOLStartUpTemplate1
             this.neighborCountToolStripMenuItem.Checked = true;
             this.neighborCountToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.neighborCountToolStripMenuItem.Name = "neighborCountToolStripMenuItem";
-            this.neighborCountToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.neighborCountToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.neighborCountToolStripMenuItem.Text = "Neighbor Count";
             this.neighborCountToolStripMenuItem.Click += new System.EventHandler(this.MenuItemNeighborCount_Click);
             // 
@@ -220,14 +221,14 @@ namespace GOLStartUpTemplate1
             this.MenuItemGrid.Checked = true;
             this.MenuItemGrid.CheckState = System.Windows.Forms.CheckState.Checked;
             this.MenuItemGrid.Name = "MenuItemGrid";
-            this.MenuItemGrid.Size = new System.Drawing.Size(180, 22);
+            this.MenuItemGrid.Size = new System.Drawing.Size(160, 22);
             this.MenuItemGrid.Text = "Grid";
             this.MenuItemGrid.Click += new System.EventHandler(this.MenuItemGrid_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(157, 6);
             // 
             // toroidalToolStripMenuItem
             // 
@@ -235,7 +236,7 @@ namespace GOLStartUpTemplate1
             this.toroidalToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toroidalToolStripMenuItem.Name = "toroidalToolStripMenuItem";
             this.toroidalToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.toroidalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.toroidalToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.toroidalToolStripMenuItem.Text = "Toroidal";
             this.toroidalToolStripMenuItem.Click += new System.EventHandler(this.MenuItemToroidal_Click);
             // 
@@ -243,7 +244,7 @@ namespace GOLStartUpTemplate1
             // 
             this.finiteToolStripMenuItem.Name = "finiteToolStripMenuItem";
             this.finiteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.finiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.finiteToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.finiteToolStripMenuItem.Text = "Finite";
             this.finiteToolStripMenuItem.Click += new System.EventHandler(this.MenuItemFinite_Click);
             // 
@@ -625,7 +626,7 @@ namespace GOLStartUpTemplate1
             // hUDToolStripMenuItem
             // 
             this.hUDToolStripMenuItem.Name = "hUDToolStripMenuItem";
-            this.hUDToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.hUDToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.hUDToolStripMenuItem.Text = "HUD";
             this.hUDToolStripMenuItem.Click += new System.EventHandler(this.hUDToolStripMenuItem_Click);
             // 
@@ -659,6 +660,11 @@ namespace GOLStartUpTemplate1
             this.graphicsPanel1.TabIndex = 3;
             this.graphicsPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.graphicsPanel1_Paint);
             this.graphicsPanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseClick);
+            // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
             // 
             // Form1
             // 
@@ -755,6 +761,7 @@ namespace GOLStartUpTemplate1
         private System.Windows.Forms.ToolStripMenuItem hUDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem neighborCountToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 

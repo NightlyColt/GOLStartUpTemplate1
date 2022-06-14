@@ -14,7 +14,7 @@ namespace GOLStartUpTemplate1
 
         // The universe array
         bool[,] universe = new bool[WIDTH, HEIGHT];
-        bool[,] scratchPad;
+        bool[,] scratchPad = new bool[WIDTH, HEIGHT];
 
         // seed of universe
         int seed = new Random().Next(int.MinValue, int.MaxValue);
@@ -50,9 +50,6 @@ namespace GOLStartUpTemplate1
         // Calculate the next generation of cells
         private void NextGeneration()
         {
-            // makes an empty canvas
-            bool[,] scratchPad = new bool[WIDTH, HEIGHT];
-
             // iterate through the y position in the universe
             for (int y = 0; y < universe.GetLength(1); y++)
             {
@@ -61,16 +58,18 @@ namespace GOLStartUpTemplate1
                 {
                     DecideNeighborCount(out int count, x, y);
                     // Apply the Rules
-                    if (count < 2) { scratchPad[x, y] = false; }
-                    else if (count > 3) { scratchPad[x, y] = false; }
-                    else if (count == 3) { scratchPad[x, y] = true; }
-                    else if (count <= 3 && universe[x, y] == true) { scratchPad[x, y] = true; }
+                    if (count < 2 && universe[x, y] == true) { scratchPad[x, y] = false; }
+                    else if (count > 3 && universe[x, y] == true) { scratchPad[x, y] = false; }
+                    else if (count == 3 && universe[x, y] == false) { scratchPad[x, y] = true; }
+                    else if ((count == 2 || count == 3) && universe[x, y] == true) { scratchPad[x, y] = true; }
 
                     // Turn in/of the scratch Pad
                 }
             }
             // copy the scratchPad into the universe
+            bool[,] temp = new bool[WIDTH, HEIGHT];
             universe = scratchPad;
+            scratchPad = temp;
 
             graphicsPanel1.Invalidate();
             // Increment generation count
@@ -245,29 +244,16 @@ namespace GOLStartUpTemplate1
                             // writes the number green if the cell has three neighbors and its dead while also filling the square
                             if (universe[x, y] == false && neighbors == 3)
                             {
-                                e.Graphics.FillRectangle(Brushes.Green, cellRect);
-                                e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Black, cellRect, stringFormat);
+                                e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
                             }
                             // writes the number green if the cell is alive and has 2 or 3 neighbors
                             else if (universe[x, y] == true && (neighbors == 2 || neighbors == 3))
                             {
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
-
                             }
-                            // if an alive cell would die, change the color of the cell
-                            else if (universe[x, y] == true)
-                            {
-                                e.Graphics.FillRectangle(Brushes.IndianRed, cellRect);
-                                e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Black, cellRect, stringFormat);
-                            }
-
-                            // if a dead cell can not be revived, staty red
                             else
                             {
-                                DecideColor(out Brush deadCellBrush);
-                                e.Graphics.DrawString(neighbors.ToString(), font, deadCellBrush, cellRect, stringFormat);
-                                // dispose of the used brush
-                                deadCellBrush.Dispose();
+                                e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Red, cellRect, stringFormat);
                             }
                         }
                     }
@@ -704,6 +690,7 @@ namespace GOLStartUpTemplate1
                     }
                 }
             }
+            string tile = dlg.Title;
         }
 
         // menu item to open a file
@@ -855,5 +842,7 @@ namespace GOLStartUpTemplate1
 
             brush = new SolidBrush(deadColor);
         }
+
+
     }
 }
