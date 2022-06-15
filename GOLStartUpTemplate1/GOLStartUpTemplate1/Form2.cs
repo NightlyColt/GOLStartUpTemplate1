@@ -17,6 +17,7 @@ namespace GOLStartUpTemplate1
             InitializeComponent();
         }
 
+        // property to access/set the numeric up down value
         public int IntValue
         {
             get

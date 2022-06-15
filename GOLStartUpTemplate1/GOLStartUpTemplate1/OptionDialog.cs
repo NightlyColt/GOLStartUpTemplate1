@@ -17,6 +17,7 @@ namespace GOLStartUpTemplate1
             InitializeComponent();
         }
 
+        // property to access/set numeric up down for the time interval
         public int Interval
         {
             get
@@ -29,6 +30,7 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        // property to access/set numeric up down for the universe's Width
         public int UWidth
         {
             get
@@ -41,6 +43,7 @@ namespace GOLStartUpTemplate1
             }
         }
 
+        // property to access/set numeric up down for the universe's Height
         public int UHeight
         {
             get

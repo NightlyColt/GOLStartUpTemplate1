@@ -18,6 +18,7 @@ namespace GOLStartUpTemplate1
             InitializeComponent();
         }
 
+        // property to access/set numeric up down for universe's seed
         public int RandomSeed
         {
             get

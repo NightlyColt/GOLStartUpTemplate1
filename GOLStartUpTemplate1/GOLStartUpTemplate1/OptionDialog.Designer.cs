@@ -92,9 +92,24 @@ namespace GOLStartUpTemplate1
             // numericUpDownInterval
             // 
             this.numericUpDownInterval.Location = new System.Drawing.Point(206, 43);
+            this.numericUpDownInterval.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.numericUpDownInterval.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownInterval.Name = "numericUpDownInterval";
             this.numericUpDownInterval.Size = new System.Drawing.Size(68, 20);
             this.numericUpDownInterval.TabIndex = 5;
+            this.numericUpDownInterval.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // numericUpDownWidth
             // 

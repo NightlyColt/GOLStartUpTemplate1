@@ -58,20 +58,27 @@ namespace GOLStartUpTemplate1
                 {
                     DecideNeighborCount(out int count, x, y);
                     // Apply the Rules
-                    if (count < 2 && universe[x, y] == true) { scratchPad[x, y] = false; }
-                    else if (count > 3 && universe[x, y] == true) { scratchPad[x, y] = false; }
-                    else if (count == 3 && universe[x, y] == false) { scratchPad[x, y] = true; }
-                    else if ((count == 2 || count == 3) && universe[x, y] == true) { scratchPad[x, y] = true; }
+                    if (universe[x, y] == true)
+                    {
+                        if (count < 2) { scratchPad[x, y] = false; }
+                        else if (count > 3) { scratchPad[x, y] = false; }
+                        else if (count == 2 || count == 3) { scratchPad[x, y] = true; }
+                    }
+                    else
+                    {
+                        if (count == 3) { scratchPad[x, y] = true; }
+                        else if (count != 3) { scratchPad[x, y] = false; }
+                    }
+                    
 
                     // Turn in/of the scratch Pad
                 }
             }
             // copy the scratchPad into the universe
-            bool[,] temp = new bool[WIDTH, HEIGHT];
+            bool[,] temp = universe;
             universe = scratchPad;
             scratchPad = temp;
-
-            graphicsPanel1.Invalidate();
+            
             // Increment generation count
             generations++;
 
@@ -79,26 +86,10 @@ namespace GOLStartUpTemplate1
             toolStripStatusLabelGenerations.Text = "Generations: " + generations.ToString();
             toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
 
-            // Calculate how many alive cells there are
+            // Calculate how many alive cells there are and update the alive count
             CountAlive();
-        }
 
-        /// <summary>
-        /// Decides if the universe is finite or toroidal
-        /// </summary>
-        /// <param name="neighbors"></param> the count
-        /// <param name="x"></param> the x coordinate
-        /// <param name="y"></param> the y coordinate
-        private void DecideNeighborCount(out int neighbors, int x, int y)
-        {
-            if (finiteToolStripMenuItem.Checked)
-            {
-                neighbors = CountNeighborsFinite(x, y);
-            }
-            else
-            {
-                neighbors = CountNeighborsToroidal(x, y);
-            }
+            graphicsPanel1.Invalidate();
         }
 
         // The event called by the timer every Interval milliseconds.
@@ -251,6 +242,7 @@ namespace GOLStartUpTemplate1
                             {
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Green, cellRect, stringFormat);
                             }
+
                             else
                             {
                                 e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Red, cellRect, stringFormat);
@@ -328,7 +320,7 @@ namespace GOLStartUpTemplate1
                 graphicsPanel1.Invalidate();
             }
         }
-
+        //#region menuStrips
         // runs the game
         private void PlayButton_Click(object sender, EventArgs e)
         {
@@ -417,11 +409,11 @@ namespace GOLStartUpTemplate1
         // randomly generate a universe based on time
         private void MenuItemFromTime_Click(object sender, EventArgs e)
         {
-            DateTime time = DateTime.Now;
+            DateTime time = DateTime.Now; 
 
             int currentTime = time.Hour + time.Minute + time.Second + time.Millisecond;
             seed = currentTime;
-            RandomFill();
+            RandomFill(); // randomly fill the universe with the new seed
         }
 
         // enables or disables the HUD
@@ -436,7 +428,6 @@ namespace GOLStartUpTemplate1
         {
             Toggle(neighborCountToolStripMenuItem);
             graphicsPanel1.Invalidate();
-
         }
 
         // enables or disables the grid from the panel
@@ -449,7 +440,8 @@ namespace GOLStartUpTemplate1
         // makes the universe toroidal (warped)
         private void MenuItemToroidal_Click(object sender, EventArgs e)
         {
-            finiteToolStripMenuItem.Checked = false;
+            // toggle between finite and toroidal
+            finiteToolStripMenuItem.Checked = false; 
             toroidalToolStripMenuItem.Checked = true;
             graphicsPanel1.Invalidate();
 
@@ -461,8 +453,6 @@ namespace GOLStartUpTemplate1
             toroidalToolStripMenuItem.Checked = false;
             finiteToolStripMenuItem.Checked = true;
             graphicsPanel1.Invalidate();
-
-
         }
 
         // opens a color modal dialog to change the back color of the panel
@@ -526,7 +516,7 @@ namespace GOLStartUpTemplate1
             dlg.UHeight = HEIGHT;
             if (DialogResult.OK == dlg.ShowDialog())
             {
-                timer.Interval = dlg.Interval;
+                timer.Interval = dlg.Interval; 
                 WIDTH = dlg.UWidth;
                 HEIGHT = dlg.UHeight;
                 universe = new bool[WIDTH, HEIGHT];
@@ -727,16 +717,19 @@ namespace GOLStartUpTemplate1
             MenuItemBackColor_Click(sender, e);
         }
 
+        // context menu way of changing the cell color
         private void cellColorToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             MenuItemCellColor_Click(sender, e);
         }
 
+        // context menu way of changing the grid color
         private void gridColorToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             MenuItemGridColor_Click(sender, e);
         }
 
+        // context menu way of changing the grid x 10 color
         private void gridx10ColorToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             MenuItemGridx10Color_Click(sender, e);
@@ -750,6 +743,7 @@ namespace GOLStartUpTemplate1
             MenuItemHUD_Click(sender, e);
         }
 
+        // context menu way of enabling/disabling the neighbor count on the cells
         private void neighborCountToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Toggle(neighborCountToolStripMenuItem1);
@@ -757,6 +751,7 @@ namespace GOLStartUpTemplate1
             MenuItemNeighborCount_Click(sender, e);
         }
 
+        // context menu way of enabling/disabling the grid outlines
         private void gridToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Toggle(gridToolStripMenuItem);
@@ -843,6 +838,23 @@ namespace GOLStartUpTemplate1
             brush = new SolidBrush(deadColor);
         }
 
+        /// <summary>
+        /// Decides if the universe is finite or toroidal
+        /// </summary>
+        /// <param name="neighbors"></param> the count
+        /// <param name="x"></param> the x coordinate
+        /// <param name="y"></param> the y coordinate
+        private void DecideNeighborCount(out int neighbors, int x, int y)
+        {
+            if (finiteToolStripMenuItem.Checked)
+            {
+                neighbors = CountNeighborsFinite(x, y);
+            }
+            else
+            {
+                neighbors = CountNeighborsToroidal(x, y);
+            }
+        }
 
     }
 }
