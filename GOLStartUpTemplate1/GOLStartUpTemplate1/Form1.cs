@@ -116,6 +116,7 @@ namespace GOLStartUpTemplate1
             {
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
+                    // Calculate the position for x and y around a cell
                     int xCheck = x + xOffset;
                     int yCheck = y + yOffset;
 
@@ -255,17 +256,17 @@ namespace GOLStartUpTemplate1
                     {
                         if (x % 10 == 0 && x != 0)
                         {
-                            Point point1 = new Point((int)(x * cellWidth), 0);
-                            Point point2 = new Point((int)(x * cellWidth), (int)((universe.GetLength(1) + 1) * cellHeight));
+                            Point startingPoint = new Point((int)(x * cellWidth), 0);
+                            Point endPoint = new Point((int)(x * cellWidth), (int)((universe.GetLength(1) + 1) * cellHeight));
 
-                            e.Graphics.DrawLine(gridx10Pen, point1, point2);
+                            e.Graphics.DrawLine(gridx10Pen, startingPoint, endPoint);
                         }
                         if (y % 10 == 0 && y != 0)
                         {
-                            Point point1 = new Point(0, (int)(y * cellHeight));
-                            Point point2 = new Point((int)((universe.GetLength(0) + 1) * cellWidth), (int)(y * cellHeight));
+                            Point startingPoint = new Point(0, (int)(y * cellHeight));
+                            Point endPoint = new Point((int)((universe.GetLength(0) + 1) * cellWidth), (int)(y * cellHeight));
 
-                            e.Graphics.DrawLine(gridx10Pen, point1, point2);
+                            e.Graphics.DrawLine(gridx10Pen, startingPoint, endPoint);
                         }
                     }
                 }
@@ -315,12 +316,13 @@ namespace GOLStartUpTemplate1
                 // Toggle the cell's state
                 universe[x, y] = !universe[x, y];
 
+                // Update the alive count
                 CountAlive();
                 // Tell Windows you need to repaint
                 graphicsPanel1.Invalidate();
             }
         }
-        //#region menuStrips
+        #region MenuStrips
         // runs the game
         private void PlayButton_Click(object sender, EventArgs e)
         {
@@ -598,6 +600,7 @@ namespace GOLStartUpTemplate1
                     while (!reader.EndOfStream)
                     {
                         string row = reader.ReadLine();
+                        // skip if the row is a comment
                         if (row[0] == '!')
                         {
                             continue;
@@ -758,6 +761,10 @@ namespace GOLStartUpTemplate1
             MenuItemGrid_Click(sender, e);
         }
 
+        #endregion
+
+        #region HerperMethods
+
         //|--------------------------------------- Helper Methods -------------------------------------------------|
 
         /// <summary>
@@ -857,4 +864,6 @@ namespace GOLStartUpTemplate1
         }
 
     }
+
+    #endregion
 }
