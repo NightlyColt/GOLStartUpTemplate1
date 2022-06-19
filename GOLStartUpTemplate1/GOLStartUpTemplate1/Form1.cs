@@ -54,7 +54,7 @@ namespace GOLStartUpTemplate1
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 // iterate through the x position in the universe
-                for (int x = 0; x < universe.GetLength(1); x++)
+                for (int x = 0; x < universe.GetLength(0); x++)
                 {
                     DecideNeighborCount(out int count, x, y);
                     // Apply the Rules
