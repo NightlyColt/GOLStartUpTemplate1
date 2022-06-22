@@ -400,6 +400,7 @@ namespace GOLStartUpTemplate1
                 seed = dlg.RandomSeed;
                 RandomFill();
                 CountAlive();
+                seedLabel.Text = "Seed: " + seed.ToString();
             }
         }
 
@@ -415,10 +416,11 @@ namespace GOLStartUpTemplate1
         {
             DateTime time = DateTime.Now; 
 
-            int currentTime = time.Hour + time.Minute + time.Second + time.Millisecond;
+            int currentTime = time.Year + time.Month + time.Day + time.Hour + time.Minute + time.Second + time.Millisecond;
             seed = currentTime;
             RandomFill(); // randomly fill the universe with the new seed
             CountAlive();
+            seedLabel.Text = "Seed: " + seed.ToString();
         }
 
         // enables or disables the HUD
