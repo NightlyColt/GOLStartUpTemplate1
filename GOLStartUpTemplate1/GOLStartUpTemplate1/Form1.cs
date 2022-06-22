@@ -399,6 +399,7 @@ namespace GOLStartUpTemplate1
             {
                 seed = dlg.RandomSeed;
                 RandomFill();
+                CountAlive();
             }
         }
 
@@ -406,6 +407,7 @@ namespace GOLStartUpTemplate1
         private void MenuItemCurrentSeed_Click(object sender, EventArgs e)
         {
             RandomFill();
+            CountAlive();
         }
 
         // randomly generate a universe based on time
@@ -416,6 +418,7 @@ namespace GOLStartUpTemplate1
             int currentTime = time.Hour + time.Minute + time.Second + time.Millisecond;
             seed = currentTime;
             RandomFill(); // randomly fill the universe with the new seed
+            CountAlive();
         }
 
         // enables or disables the HUD

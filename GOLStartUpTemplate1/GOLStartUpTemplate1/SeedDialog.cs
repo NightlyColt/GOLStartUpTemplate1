@@ -35,7 +35,6 @@ namespace GOLStartUpTemplate1
         {
             Random random = new Random();
             RandomSeed = random.Next();
-            numericUpDown1.Value = RandomSeed;
         }
     }
 }
