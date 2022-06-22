@@ -545,6 +545,7 @@ namespace GOLStartUpTemplate1
             graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
 
             universe = new bool[WIDTH, HEIGHT];
+            scratchPad = new bool[WIDTH, HEIGHT];
             CountAlive(); // update the alive member variable
             graphicsPanel1.Invalidate();
         }
@@ -563,6 +564,7 @@ namespace GOLStartUpTemplate1
             graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
 
             universe = new bool[WIDTH, HEIGHT];
+            scratchPad = new bool[WIDTH, HEIGHT];
             CountAlive(); // update the alive member variable
             graphicsPanel1.Invalidate();
         }
