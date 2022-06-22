@@ -525,6 +525,7 @@ namespace GOLStartUpTemplate1
                 WIDTH = dlg.UWidth;
                 HEIGHT = dlg.UHeight;
                 universe = new bool[WIDTH, HEIGHT];
+                scratchPad = new bool[WIDTH, HEIGHT];
                 toolStripStatusLabelInterval.Text = "Interval: " + timer.Interval.ToString();
 
                 graphicsPanel1.Invalidate();
